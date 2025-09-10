@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void preencher_cruz(int tabuleiro[10][10], int x, int y) {
+    for (int i = 0; i < 10; i++) {
+        tabuleiro[i][y] = 1; // Coluna
+        tabuleiro[x][i] = 1; // Linha
+    }
+}
+
+void preencher_cone(int tabuleiro[10][10], int x, int y) {
+    for (int i = x; i < 10; i++) {
+        for (int j = y - (i - x); j <= y + (i - x); j++) {
+            if (j >= 0 && j < 10) {
+                tabuleiro[i][j] = 1;
+            }
+        }
+    }
+}
+
+void preencher_octaedro(int tabuleiro[10][10], int x, int y, int raio) {
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            if (abs(i - x) + abs(j - y) <= raio) {
+                tabuleiro[i][j] = 1;
+            }
+        }
+    }
+}
+
+int main() {
+    int tabuleiro[10][10] = {0};
+
+    // Aplicar padrões
+    preencher_cruz(tabuleiro, 5, 5);
+    preencher_cone(tabuleiro, 0, 5);
+    preencher_octaedro(tabuleiro, 7, 2, 3);
+
+    // Exibir tabuleiro
+    printf("Tabuleiro Mestre:\n");
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            printf("%d ", tabuleiro[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
